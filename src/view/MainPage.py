@@ -133,7 +133,6 @@ class MainPage(ft.View):
                             spacing=10
                         ),
                         self.start_button,
-                        self.archive_button
                     ],
                     spacing=15,
                     alignment=ft.MainAxisAlignment.CENTER,
