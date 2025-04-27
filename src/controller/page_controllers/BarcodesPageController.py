@@ -1,6 +1,4 @@
-import os
-
-from src.view.BarcodesPage import BarcodesPage
+from src.view.pages.BarcodesPage import BarcodesPage
 
 
 class BarcodesPageController:

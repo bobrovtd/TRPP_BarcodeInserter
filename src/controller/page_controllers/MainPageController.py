@@ -1,4 +1,4 @@
-from src.view.MainPage import MainPage
+from src.view.pages.MainPage import MainPage
 
 
 class MainPageController:
