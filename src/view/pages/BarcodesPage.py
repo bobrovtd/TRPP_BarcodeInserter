@@ -52,7 +52,7 @@ class BarcodesPage(ft.View):
             icon=ft.Icons.FOLDER_OPEN,
             bgcolor=ft.Colors.BLUE,
             color=ft.Colors.WHITE,
-            on_click=lambda e: None
+            on_click=lambda e: self.controller.picker(self.mode_radio.value, self.path_field)
         )
 
         # Кнопка "Старт"
@@ -61,7 +61,7 @@ class BarcodesPage(ft.View):
             icon=ft.Icons.PLAY_ARROW,
             bgcolor=ft.Colors.GREEN,
             color=ft.Colors.WHITE,
-            on_click=lambda _: None
+            on_click=lambda _: self.controller.process_barcodes()
         )
 
         # Кнопка "Назад"
@@ -70,7 +70,7 @@ class BarcodesPage(ft.View):
             icon=ft.Icons.ARROW_BACK,
             bgcolor=ft.Colors.BLUE,
             color=ft.Colors.WHITE,
-            on_click=lambda _: self.page.go("/")
+            on_click=lambda _: self.controller.app_controller.page.go("/")
         )
 
         self.build_view()

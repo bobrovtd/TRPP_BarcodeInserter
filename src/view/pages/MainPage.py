@@ -16,8 +16,6 @@ class MainPage(ft.View):
         Args:
             controller: Контроллер главной страницы (MainPageController).
         """
-
-        #
         super().__init__(route="/")
         self.controller = controller
         self.page = self.controller.app_controller.page
@@ -33,7 +31,7 @@ class MainPage(ft.View):
             color=ft.Colors.BLACK87
         )
 
-        # Поле с количеством штрихкодов
+        # Текст с количеством штрихкодов
         self.barcode_count_text = ft.Text(
             f"Свободные штрихкоды: {self.barcodes_count}",
             color=ft.Colors.BLACK87
@@ -62,7 +60,7 @@ class MainPage(ft.View):
             icon=ft.Icons.FOLDER_OPEN,
             bgcolor=ft.Colors.BLUE,
             color=ft.Colors.WHITE,
-            on_click=lambda e: None
+            on_click=lambda e: self.controller.pick_directory(self.folder_path_field)
         )
 
         # Поле для ввода пути к папке для сохранения готовых файлов
@@ -79,7 +77,7 @@ class MainPage(ft.View):
             icon=ft.Icons.FOLDER_OPEN,
             bgcolor=ft.Colors.BLUE,
             color=ft.Colors.WHITE,
-            on_click=lambda e: None
+            on_click=lambda e: self.controller.pick_directory(self.output_folder_field)
         )
 
         # Кнопка для запуска обработки PDF файлов
@@ -90,7 +88,7 @@ class MainPage(ft.View):
             color=ft.Colors.WHITE,
             width=200,
             height=45,
-            on_click=lambda _: None
+            on_click=lambda _: self.controller.process_pdfs()
         )
 
         # Кнопка для перехода на страницу архива
@@ -101,7 +99,7 @@ class MainPage(ft.View):
             color=ft.Colors.WHITE,
             width=200,
             height=45,
-            on_click=lambda _: None
+            on_click=lambda _: self.controller.open_archive()
         )
 
         self.build_view()
@@ -133,6 +131,7 @@ class MainPage(ft.View):
                             spacing=10
                         ),
                         self.start_button,
+                        self.archive_button
                     ],
                     spacing=15,
                     alignment=ft.MainAxisAlignment.CENTER,

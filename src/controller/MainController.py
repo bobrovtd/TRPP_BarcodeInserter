@@ -1,5 +1,6 @@
 import flet as ft
 from src.controller.page_controllers import MainPageController, BarcodesPageController
+from src.view.DirectoryPickerMixin import PickerService
 
 
 class MainController:
@@ -10,7 +11,7 @@ class MainController:
     """
     # Константы для настроек окна
     WINDOW_WIDTH: int = 600
-    WINDOW_HEIGHT: int = 400
+    WINDOW_HEIGHT: int = 460
 
     def __init__(self, page: ft.Page) -> None:
         """
@@ -20,6 +21,7 @@ class MainController:
             page (ft.Page): Объект страницы Flet для управления интерфейсом.
         """
         self.page: ft.Page = page
+        self.picker_service: PickerService = PickerService(page)
 
         # Настройки окна
         self.page.window.width = self.WINDOW_WIDTH
@@ -47,8 +49,20 @@ class MainController:
 
         Args:
             route (str): Новый маршрут страницы.
+
+        Raises:
+            AttributeError: Если контроллер не найден и не удалось создать представление по умолчанию.
         """
         self.page.views.clear()
         controller = self.controllers.get(route)
-        self.page.views.append(controller.view)
-        self.page.update()
+        try:
+            if controller:
+                self.page.views.append(controller.view)
+            else:
+                self.page.views.append(ft.View(controls=[
+                    ft.Text("Этой страницы пока нет, но скоро должна появиться!)"),
+                    ft.TextButton("На главную", on_click=lambda e: self.page.go("/"))
+                ]))
+            self.page.update()
+        except AttributeError as e:
+            raise AttributeError(f"Ошибка при загрузке страницы для маршрута '{route}': {e}")
